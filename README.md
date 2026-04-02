@@ -88,29 +88,48 @@ Run unit tests for scoring logic:
 flutter test
 ```
 
-## Production Build
+## Build & Deployment
 
-### Web
-```bash
-flutter build web
-```
+### Android
 
-### Android (APK)
-To generate an APK for testing or direct installation:
+#### Build APK
+To generate a single APK for all architectures:
 ```bash
 flutter build apk --release
 ```
-The output file will be located at:
-`build/app/outputs/flutter-apk/app-release.apk`
+For smaller, architecture-specific APKs (recommended for direct distribution):
+```bash
+flutter build apk --release --split-per-abi
+```
+*Output path: `build/app/outputs/flutter-apk/`*
 
-### Android (App Bundle)
-To generate an App Bundle (AAB) for Google Play:
+#### Build App Bundle (Google Play Store)
+Generates an `.aab` file optimized for Google Play:
 ```bash
 flutter build appbundle --release
 ```
+*Output path: `build/app/outputs/bundle/release/`*
 
 ### iOS
+
+#### Build for Archive
+Prepares the iOS project for manual archiving in Xcode:
 ```bash
 flutter build ios --release
-# Then open ios/Runner.xcworkspace in Xcode and perform an Archive.
 ```
+*Next Steps: Open `ios/Runner.xcworkspace` in Xcode, select **Any iOS Device (arm64)** as the target, and select **Product > Archive**.*
+
+#### Build IPA
+To generate an `.ipa` file directly (requires valid code signing setup):
+```bash
+flutter build ipa --release
+```
+*Output path: `build/ios/archive/` and `build/ios/ipa/`*
+
+### Web
+To build the project for web hosting:
+```bash
+flutter build web --release
+```
+*Output path: `build/web/`*
+
