@@ -18,6 +18,14 @@ class _GameScreenState extends State<GameScreen> {
   bool _isHolding = false;
   bool _isFinished = false;
 
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<TimerProvider>().reset();
+    });
+  }
+
   void _handleStart() {
     if (_isFinished) return;
     setState(() => _isHolding = true);
@@ -71,10 +79,6 @@ class _GameScreenState extends State<GameScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        leading: TextButton(
-          onPressed: () => Navigator.popUntil(context, ModalRoute.withName('/')),
-          child: const Text('Menu', style: TextStyle(color: Colors.black)),
-        ),
       ),
       body: Stack(
         children: [
@@ -100,7 +104,7 @@ class _GameScreenState extends State<GameScreen> {
                   ),
                   const SizedBox(height: 80),
                   RedButton(
-                    label: _isHolding ? 'Holding...' : 'Start',
+                    label: _isHolding ? 'Holding...' : 'Hold to Start',
                     onLongPressStart: _handleStart,
                     onLongPressEnd: _handleEnd,
                   ),

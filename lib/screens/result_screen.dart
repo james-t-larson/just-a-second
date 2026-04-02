@@ -26,10 +26,6 @@ class ResultScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        leading: TextButton(
-          onPressed: () => Navigator.popUntil(context, ModalRoute.withName('/')),
-          child: const Text('Menu', style: TextStyle(color: Colors.black)),
-        ),
       ),
       body: Center(
         child: Column(
@@ -68,6 +64,7 @@ class ResultScreen extends StatelessWidget {
                     Navigator.pushReplacementNamed(context, '/transition');
                   } else {
                     gameProvider.nextLevel();
+                    context.read<TimerProvider>().reset();
                     Navigator.pushReplacementNamed(context, '/game');
                   }
                 },

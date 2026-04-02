@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/game_provider.dart';
+import '../providers/timer_provider.dart';
 import '../widgets/red_button.dart';
 
 class TransitionScreen extends StatelessWidget {
@@ -16,10 +17,6 @@ class TransitionScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        leading: TextButton(
-          onPressed: () => Navigator.popUntil(context, ModalRoute.withName('/')),
-          child: const Text('Menu', style: TextStyle(color: Colors.black)),
-        ),
       ),
       body: Center(
         child: Padding(
@@ -37,6 +34,7 @@ class TransitionScreen extends StatelessWidget {
                 label: 'Continue',
                 onTap: () {
                   gameProvider.nextLevel();
+                  context.read<TimerProvider>().reset();
                   Navigator.pushReplacementNamed(context, '/game');
                 },
               ),

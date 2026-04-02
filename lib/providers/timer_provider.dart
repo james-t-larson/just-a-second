@@ -16,8 +16,10 @@ class TimerProvider with ChangeNotifier {
   }
 
   void start() {
+    _elapsedMilliseconds = 0; // Reset immediately
     _stopwatch.reset();
     _stopwatch.start();
+    _timer?.cancel(); // Cancel any existing timer
     _timer = Timer.periodic(const Duration(milliseconds: 16), (timer) {
       _elapsedMilliseconds = _stopwatch.elapsedMilliseconds;
       notifyListeners();
@@ -32,6 +34,8 @@ class TimerProvider with ChangeNotifier {
   }
 
   void reset() {
+    _timer?.cancel(); // Stop the periodic updates
+    _stopwatch.stop(); // Stop the stopwatch if running
     _stopwatch.reset();
     _elapsedMilliseconds = 0;
     notifyListeners();

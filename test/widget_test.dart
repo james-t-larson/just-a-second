@@ -7,24 +7,25 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:just_a_second/main.dart';
+import 'package:provider/provider.dart';
+import 'package:just_a_second/app.dart';
+import 'package:just_a_second/providers/game_provider.dart';
+import 'package:just_a_second/providers/timer_provider.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+  testWidgets('App smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => GameProvider()),
+          ChangeNotifierProvider(create: (_) => TimerProvider()),
+        ],
+        child: const JustASecondApp(),
+      ),
+    );
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Verify that the title is present.
+    expect(find.text('Just a Second'), findsOneWidget);
   });
 }

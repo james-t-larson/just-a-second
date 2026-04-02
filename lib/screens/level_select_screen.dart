@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/game_provider.dart';
+import '../providers/timer_provider.dart';
 import '../utils/level_data.dart';
 
 class LevelSelectScreen extends StatelessWidget {
@@ -18,10 +19,6 @@ class LevelSelectScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.black),
-        leading: TextButton(
-          onPressed: () => Navigator.pop(context),
-          child: const Text('Menu', style: TextStyle(color: Colors.black)),
-        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -37,12 +34,13 @@ class LevelSelectScreen extends StatelessWidget {
             final isCurrent = index == gameProvider.currentLevelIndex;
 
             return InkWell(
-              onTap: isUnlocked
-                  ? () {
-                      gameProvider.goToLevel(index);
-                      Navigator.pushNamed(context, '/game');
-                    }
-                  : null,
+                  onTap: isUnlocked
+                      ? () {
+                          gameProvider.goToLevel(index);
+                          context.read<TimerProvider>().reset();
+                          Navigator.pushNamed(context, '/game');
+                        }
+                      : null,
               child: Container(
                 decoration: BoxDecoration(
                   color: isCurrent

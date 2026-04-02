@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/game_provider.dart';
+import '../providers/timer_provider.dart';
 import '../widgets/red_button.dart';
 
 class MainMenuScreen extends StatelessWidget {
@@ -13,10 +14,6 @@ class MainMenuScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        leading: TextButton(
-          onPressed: () {}, // Already on menu
-          child: const Text('Menu', style: TextStyle(color: Colors.black)),
-        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pushNamed(context, '/levels'),
@@ -42,6 +39,7 @@ class MainMenuScreen extends StatelessWidget {
               isLarge: true,
               onTap: () {
                 final gameProvider = context.read<GameProvider>();
+                context.read<TimerProvider>().reset();
                 Navigator.pushNamed(context, '/game');
               },
             ),

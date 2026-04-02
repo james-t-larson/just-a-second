@@ -89,6 +89,28 @@ flutter test
 ```
 
 ## Production Build
-- **Web**: `flutter build web`
-- **Android**: `flutter build apk` or `flutter build appbundle`
-- **iOS**: `flutter build ios` (followed by Archive in Xcode)
+
+### Web
+```bash
+flutter build web
+```
+
+### Android (APK)
+To generate an APK for testing or direct installation:
+```bash
+flutter build apk --release
+```
+The output file will be located at:
+`build/app/outputs/flutter-apk/app-release.apk`
+
+### Android (App Bundle)
+To generate an App Bundle (AAB) for Google Play:
+```bash
+flutter build appbundle --release
+```
+
+### iOS
+```bash
+flutter build ios --release
+# Then open ios/Runner.xcworkspace in Xcode and perform an Archive.
+```
